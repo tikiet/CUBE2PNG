@@ -66,12 +66,19 @@ public class Main {
             BufferedImage bfi = new BufferedImage(dim, dim, BufferedImage.TYPE_3BYTE_BGR);
             Graphics2D g2d = bfi.createGraphics();
 
-            for (int y = 0; y < dim; y++) {
-                for (int x = 0; x < dim; x++) {
-                    float[] raw = data[index++];
-                    Color color = new Color(raw[0], raw[1], raw[2]);
-                    g2d.setColor(color);
-                    g2d.drawLine(x, y, x, y);
+            for (int x = 0; x < dim / lutSize; x++) {
+                for (int y = 0; y < dim / lutSize; y++) {
+                    for (int w = 0; w < lutSize; w++) {
+                        for (int h = 0; h < lutSize; h++) {
+                            int width = y * lutSize + h;
+                            int height = x * lutSize + w;
+
+                            float[] raw = data[index++];
+                            Color color = new Color(raw[0], raw[1], raw[2]);
+                            g2d.setColor(color);
+                            g2d.drawLine(width, height, width, height);
+                        }
+                    }
                 }
             }
 
